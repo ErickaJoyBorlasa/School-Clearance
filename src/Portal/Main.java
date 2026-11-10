@@ -3,6 +3,7 @@ package Portal;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class Main {
     private static final int MAX_LOGIN_ATTEMPTS = 3;
@@ -37,9 +38,8 @@ public class Main {
         UIManager.put("OptionPane.messageForeground", Color.BLACK);
     }
 
-    public static void showLogin() {
-    loginAttempts = 0; 
-    JFrame frame = new JFrame("San Isidro College - Login");
+    private static void showLogin() {
+        JFrame frame = new JFrame("San Isidro College - Login");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(650, 520);
         frame.setMinimumSize(new Dimension(600, 480));
@@ -138,7 +138,7 @@ public class Main {
                 int remaining = MAX_LOGIN_ATTEMPTS-loginAttempts;
                 if (remaining>0){
                 JOptionPane.showMessageDialog(frame,
-                        "Incorrect username or password. Attempts remaining." + remaining,
+                        "Incorrect username or password. Attempts remaining: " + remaining,
                         "Login Failed", JOptionPane.ERROR_MESSAGE);
                 password.setText("");
                 password.requestFocusInWindow();
@@ -151,8 +151,8 @@ public class Main {
                 }
             }
         };
-        login.addActionListener(e -> authenticate.run());
-        password.addActionListener(e -> authenticate.run());
+        login.addActionListener((ActionEvent e) -> authenticate.run());
+        password.addActionListener((ActionEvent e) -> authenticate.run());
 
         background.add(card);
         frame.setContentPane(background);

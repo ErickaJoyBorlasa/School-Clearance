@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -173,7 +174,7 @@ public class SchoolPortal extends JFrame {
             button.setBackground(new Color(220, 235, 255));
             button.setFocusPainted(false);
             button.setBorder(new EmptyBorder(8, 17, 8, 12));
-            button.addActionListener(e -> showPage(item));
+            button.addActionListener((ActionEvent e) -> showPage(item));
             side.add(button);
             side.add(Box.createVerticalStrut(8));
         }
@@ -283,9 +284,9 @@ public class SchoolPortal extends JFrame {
         JButton add = greenButton("+ Add Student");
         JButton edit = greenButton("Edit Selected");
         JButton delete = greenButton("Delete Selected");
-        add.addActionListener(e -> studentDialog(null));
-        edit.addActionListener(e -> editStudent());
-        delete.addActionListener(e -> deleteStudent());
+        add.addActionListener((ActionEvent e) -> studentDialog(null));
+        edit.addActionListener((ActionEvent e) -> editStudent());
+        delete.addActionListener((ActionEvent e) -> deleteStudent());
         tools.add(add); tools.add(edit); tools.add(delete);
 
         JPanel content = new JPanel(new BorderLayout(0, 12));
@@ -313,7 +314,7 @@ public class SchoolPortal extends JFrame {
         JPanel tools = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
         tools.setOpaque(false);
         JButton update = greenButton("Update Office Status");
-        update.addActionListener(e -> updateClearance());
+        update.addActionListener((ActionEvent e) -> updateClearance());
         tools.add(update);
 
         JPanel content = new JPanel(new BorderLayout(0, 12));
@@ -335,8 +336,8 @@ public class SchoolPortal extends JFrame {
         tools.setOpaque(false);
         JButton add = greenButton("+ Add Payment");
         JButton status = greenButton("Mark Paid / Pending");
-        add.addActionListener(e -> addPayment());
-        status.addActionListener(e -> changePaymentStatus());
+        add.addActionListener((ActionEvent e) -> addPayment());
+        status.addActionListener((ActionEvent e) -> changePaymentStatus());
         tools.add(add); tools.add(status);
 
         JPanel content = new JPanel(new BorderLayout(0, 12));
@@ -360,7 +361,7 @@ public class SchoolPortal extends JFrame {
         JPanel tools = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
         tools.setOpaque(false);
         JButton add = greenButton("+ New Announcement");
-        add.addActionListener(e -> addAnnouncement());
+        add.addActionListener((ActionEvent e) -> addAnnouncement());
         tools.add(add);
 
         JPanel content = new JPanel(new BorderLayout(0, 12));
@@ -405,7 +406,7 @@ public class SchoolPortal extends JFrame {
         b.setFont(new Font("SansSerif", Font.BOLD, 12));
         b.setPreferredSize(new Dimension(125, 30));
         b.setMinimumSize(new Dimension(125, 30));
-        b.addActionListener(e -> showPage(target));
+        b.addActionListener((ActionEvent e) -> showPage(target));
 
         JPanel details = new JPanel(new BorderLayout(0, 5));
         details.setOpaque(false);
@@ -474,7 +475,7 @@ public class SchoolPortal extends JFrame {
         changePassword.setBackground(new Color(220, 235, 255));
         changePassword.setFocusPainted(false);
         changePassword.setBorder(new EmptyBorder(9, 18, 9, 18));
-        changePassword.addActionListener(e -> changePasswordDialog());
+        changePassword.addActionListener((ActionEvent e) -> changePasswordDialog());
 
         JButton logout = new JButton("Log Out");
         logout.setFont(BOLD);
@@ -482,7 +483,7 @@ public class SchoolPortal extends JFrame {
         logout.setBackground(new Color(255, 225, 225));
         logout.setFocusPainted(false);
         logout.setBorder(new EmptyBorder(9, 18, 9, 18));
-        logout.addActionListener(e -> {
+        logout.addActionListener((ActionEvent e) -> {
             int choice = JOptionPane.showConfirmDialog(
                     this,
                     "Are you sure you want to log out?",
@@ -498,7 +499,6 @@ public class SchoolPortal extends JFrame {
                         JOptionPane.INFORMATION_MESSAGE
                 );
                 dispose();
-                Main.showLogin();
             }
         });
         actionButtons.add(changePassword);
@@ -802,9 +802,9 @@ public class SchoolPortal extends JFrame {
         int answer = JOptionPane.showConfirmDialog(this, "Delete student " + id + " and their linked records?",
                 "Confirm Delete", JOptionPane.YES_NO_OPTION);
         if (answer == JOptionPane.YES_OPTION) {
-            students.removeIf(s -> s.getStudentID().equals(id));
-            clearances.removeIf(c -> c.getStudentID().equals(id));
-            payments.removeIf(p -> p.getStudentID().equals(id));
+            students.removeIf((Student s) -> s.getStudentID().equals(id));
+            clearances.removeIf((Student.ClearanceRecord c) -> c.getStudentID().equals(id));
+            payments.removeIf((Student.PaymentRecord p) -> p.getStudentID().equals(id));
             refreshAllTables();
         }
     }
